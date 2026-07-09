@@ -13,6 +13,16 @@ static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
+
+        using var loginForm = new LoginForm();
+        if (loginForm.ShowDialog() != DialogResult.OK
+            || loginForm.AuthenticatedUser is null
+            || loginForm.EquipmentService is null
+            || loginForm.UserService is null)
+        {
+            return;
+        }
+
+        Application.Run(new MainForm(loginForm.EquipmentService, loginForm.UserService, loginForm.AuthenticatedUser));
     }
 }
