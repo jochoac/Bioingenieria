@@ -28,6 +28,9 @@ public partial class EquipmentCardControl : UserControl
             chip.Click += (_, _) => OnCategoryChipClick(category);
             chipsPanel.Controls.Add(chip);
         }
+
+        PerformLayout();
+        Height = titleLabel.Height + chipsPanel.Height + Padding.Vertical;
     }
 
     private static void OnCategoryChipClick(DocumentCategory category)

@@ -59,9 +59,13 @@ public partial class MainForm : Form
 
         resultsPanel.Controls.Clear();
 
+        var cardWidth = resultsPanel.ClientSize.Width
+            - resultsPanel.Padding.Horizontal
+            - SystemInformation.VerticalScrollBarWidth;
+
         foreach (var equipment in equipments)
         {
-            var card = new EquipmentCardControl();
+            var card = new EquipmentCardControl { Width = Math.Max(cardWidth, 250) };
             card.SetEquipment(equipment);
             resultsPanel.Controls.Add(card);
         }

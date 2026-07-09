@@ -45,8 +45,6 @@ partial class EquipmentCardControl
         //
         // EquipmentCardControl
         //
-        AutoSize = true;
-        AutoSizeMode = AutoSizeMode.GrowAndShrink;
         BorderStyle = BorderStyle.FixedSingle;
         Controls.Add(chipsPanel);
         Controls.Add(titleLabel);
