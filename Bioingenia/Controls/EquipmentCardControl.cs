@@ -47,7 +47,16 @@ public partial class EquipmentCardControl : UserControl
             menu.Items.Add(Path.GetFileName(filePath), null, (_, _) => FileOpenerService.Open(filePath));
         }
 
-        menu.Closed += (_, _) => menu.Dispose();
+        menu.Closed += Menu_Closed;
         menu.Show(Cursor.Position);
+    }
+
+    private static void Menu_Closed(object? sender, ToolStripDropDownClosedEventArgs e)
+    {
+        // Disposing synchronously here races with ToolStripManager's internal teardown of the
+        // dropdown (it still touches the control's Handle after Closed fires) and crashes the
+        // app with an ObjectDisposedException. Deferring past the current message avoids that.
+        var menu = (ContextMenuStrip)sender!;
+        menu.BeginInvoke((MethodInvoker)menu.Dispose);
     }
 }
