@@ -57,6 +57,7 @@ partial class UploadDocumentForm
         //
         // categoryComboBox
         //
+        categoryComboBox.DropDownStyle = ComboBoxStyle.DropDown;
         categoryComboBox.Location = new System.Drawing.Point(20, 103);
         categoryComboBox.Name = "categoryComboBox";
         categoryComboBox.Size = new System.Drawing.Size(360, 28);

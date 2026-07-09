@@ -15,6 +15,8 @@ public static class CategoryCatalog
         ["factura"] = "Factura"
     };
 
+    public static IReadOnlyCollection<string> KnownKeys => DisplayNames.Keys;
+
     public static string GetDisplayName(string folderKey)
     {
         if (DisplayNames.TryGetValue(folderKey, out var displayName))

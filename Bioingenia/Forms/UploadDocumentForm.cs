@@ -29,10 +29,13 @@ public partial class UploadDocumentForm : Form
 
     private void LoadCategoryOptions()
     {
-        var keys = _equipmentService.GetAll()
-            .SelectMany(e => e.Categories.Select(c => c.FolderKey))
+        var existingKeys = _equipmentService.GetAll()
+            .SelectMany(e => e.Categories.Select(c => c.FolderKey));
+
+        var keys = CategoryCatalog.KnownKeys
+            .Concat(existingKeys)
             .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(k => k)
+            .OrderBy(k => k, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
         categoryComboBox.Items.Clear();
