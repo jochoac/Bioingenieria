@@ -60,13 +60,15 @@ public partial class MainForm : Form
         resultsPanel.Controls.Clear();
 
         var cardWidth = resultsPanel.ClientSize.Width
-            - resultsPanel.Padding.Horizontal
-            - SystemInformation.VerticalScrollBarWidth;
+                        - resultsPanel.Padding.Horizontal
+                        - SystemInformation.VerticalScrollBarWidth;
+        var isAdmin = _currentUser.Role == UserRole.Administrator;
 
         foreach (var equipment in equipments)
         {
-            var card = new EquipmentCardControl { Width = Math.Max(cardWidth, 250) };
+            var card = new EquipmentCardControl(_equipmentService, isAdmin) { Width = Math.Max(cardWidth, 250) };
             card.SetEquipment(equipment);
+            card.EquipmentDeleted += (_, _) => DisplayResults(_equipmentService.SearchBySerial(searchTextBox.Text));
             resultsPanel.Controls.Add(card);
         }
 

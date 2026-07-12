@@ -124,6 +124,18 @@ public class EquipmentService
         return _cache.First(e => string.Equals(e.SerialNumber, serialNumber, StringComparison.OrdinalIgnoreCase));
     }
 
+    public void DeleteEquipment(string serialNumber)
+    {
+        if (!SerialExists(serialNumber))
+        {
+            throw new InvalidOperationException("No se puede borrar un equipo que no existe.");
+        }
+
+        var folder = Path.Combine(_rootPath, serialNumber);
+        Directory.Delete(folder, true);
+        RefreshCache();
+    }
+
     public string SaveFileToCategory(string serialNumber, string categoryKey, string sourceFilePath, bool overwrite)
     {
         var categoryFolder = Path.Combine(_rootPath, serialNumber, categoryKey);

@@ -18,6 +18,9 @@ partial class EquipmentCardControl
     {
         titleLabel = new Label();
         chipsPanel = new FlowLayoutPanel();
+        actionsPanel = new FlowLayoutPanel();
+        deleteButton = new Button();
+        actionsPanel.SuspendLayout();
         SuspendLayout();
         //
         // titleLabel
@@ -43,19 +46,49 @@ partial class EquipmentCardControl
         chipsPanel.TabIndex = 1;
         chipsPanel.WrapContents = true;
         //
+        // actionsPanel
+        //
+        actionsPanel.AutoSize = true;
+        actionsPanel.Controls.Add(deleteButton);
+        actionsPanel.Dock = DockStyle.Bottom;
+        actionsPanel.FlowDirection = FlowDirection.RightToLeft;
+        actionsPanel.Location = new Point(8, 75);
+        actionsPanel.Name = "actionsPanel";
+        actionsPanel.Size = new Size(300, 33);
+        actionsPanel.TabIndex = 2;
+        actionsPanel.WrapContents = false;
+        //
+        // deleteButton
+        //
+        deleteButton.AutoSize = true;
+        deleteButton.FlatStyle = FlatStyle.Flat;
+        deleteButton.FlatAppearance.BorderColor = Color.Firebrick;
+        deleteButton.ForeColor = Color.Firebrick;
+        deleteButton.Margin = new Padding(4);
+        deleteButton.Name = "deleteButton";
+        deleteButton.TabIndex = 0;
+        deleteButton.Text = "Eliminar";
+        deleteButton.UseVisualStyleBackColor = true;
+        deleteButton.Click += deleteButton_Click;
+        //
         // EquipmentCardControl
         //
         BorderStyle = BorderStyle.FixedSingle;
         Controls.Add(chipsPanel);
         Controls.Add(titleLabel);
+        Controls.Add(actionsPanel);
         Margin = new Padding(8);
         Name = "EquipmentCardControl";
         Padding = new Padding(8);
-        Size = new Size(360, 90);
+        Size = new Size(360, 123);
+        actionsPanel.ResumeLayout(false);
+        actionsPanel.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
 
     private Label titleLabel;
     private FlowLayoutPanel chipsPanel;
+    private FlowLayoutPanel actionsPanel;
+    private Button deleteButton;
 }
