@@ -9,4 +9,9 @@
         <RootNamespace>Bioingenieria</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ClosedXML" Version="0.105.0" />
+      <PackageReference Include="ScottPlot.WinForms" Version="5.1.59" />
+    </ItemGroup>
+
 </Project>

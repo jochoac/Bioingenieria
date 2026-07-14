@@ -8,12 +8,14 @@ public partial class MainForm : Form
 {
     private readonly EquipmentService _equipmentService;
     private readonly UserService _userService;
+    private readonly ScheduleService _scheduleService;
     private readonly User _currentUser;
 
-    public MainForm(EquipmentService equipmentService, UserService userService, User currentUser)
+    public MainForm(EquipmentService equipmentService, UserService userService, ScheduleService scheduleService, User currentUser)
     {
         _equipmentService = equipmentService;
         _userService = userService;
+        _scheduleService = scheduleService;
         _currentUser = currentUser;
 
         InitializeComponent();
@@ -42,7 +44,7 @@ public partial class MainForm : Form
 
     private void AdminButton_Click(object? sender, EventArgs e)
     {
-        using var adminForm = new AdminForm(_equipmentService, _userService);
+        using var adminForm = new AdminForm(_equipmentService, _userService, _scheduleService);
         adminForm.ShowDialog(this);
 
         DisplayResults(_equipmentService.SearchBySerial(searchTextBox.Text));

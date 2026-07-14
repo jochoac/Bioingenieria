@@ -19,6 +19,7 @@ partial class AdminForm
     private void InitializeComponent()
     {
         leftPanel = new Panel();
+        schedulesButton = new Button();
         manageUsersButton = new Button();
         uploadDocumentButton = new Button();
         newEquipmentButton = new Button();
@@ -28,6 +29,7 @@ partial class AdminForm
         //
         // leftPanel
         //
+        leftPanel.Controls.Add(schedulesButton);
         leftPanel.Controls.Add(manageUsersButton);
         leftPanel.Controls.Add(uploadDocumentButton);
         leftPanel.Controls.Add(newEquipmentButton);
@@ -68,6 +70,16 @@ partial class AdminForm
         manageUsersButton.UseVisualStyleBackColor = true;
         manageUsersButton.Click += ManageUsersButton_Click;
         //
+        // schedulesButton
+        //
+        schedulesButton.Location = new System.Drawing.Point(12, 138);
+        schedulesButton.Name = "schedulesButton";
+        schedulesButton.Size = new System.Drawing.Size(160, 32);
+        schedulesButton.TabIndex = 3;
+        schedulesButton.Text = "Cronogramas";
+        schedulesButton.UseVisualStyleBackColor = true;
+        schedulesButton.Click += SchedulesButton_Click;
+        //
         // treeView
         //
         treeView.Dock = DockStyle.Fill;
@@ -98,5 +110,6 @@ partial class AdminForm
     private Button newEquipmentButton;
     private Button uploadDocumentButton;
     private Button manageUsersButton;
+    private Button schedulesButton;
     private TreeView treeView;
 }

@@ -28,4 +28,13 @@ public static class ConfigService
     {
         return Path.Combine(equipmentRootPath, "_system", "users.json");
     }
+
+    public static string SchedulePath(string equipmentRootPath, ScheduleType type)
+    {
+        var fileName = type == ScheduleType.Maintenance
+            ? "cronograma_mantenimiento.json"
+            : "cronograma_calibracion.json";
+
+        return Path.Combine(equipmentRootPath, "_system", fileName);
+    }
 }

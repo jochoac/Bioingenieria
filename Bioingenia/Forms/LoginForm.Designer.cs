@@ -64,6 +64,7 @@ partial class LoginForm
         errorLabel.AutoSize = true;
         errorLabel.ForeColor = System.Drawing.Color.Firebrick;
         errorLabel.Location = new System.Drawing.Point(20, 138);
+        errorLabel.MaximumSize = new System.Drawing.Size(260, 0);
         errorLabel.Name = "errorLabel";
         errorLabel.Size = new System.Drawing.Size(0, 20);
         errorLabel.TabIndex = 4;

@@ -8,6 +8,7 @@ public partial class LoginForm : Form
     public User? AuthenticatedUser { get; private set; }
     public EquipmentService? EquipmentService { get; private set; }
     public UserService? UserService { get; private set; }
+    public ScheduleService? ScheduleService { get; private set; }
 
     private string _equipmentRootPath = string.Empty;
 
@@ -78,6 +79,7 @@ public partial class LoginForm : Form
 
         AuthenticatedUser = user;
         EquipmentService = new EquipmentService(_equipmentRootPath);
+        ScheduleService = new ScheduleService(_equipmentRootPath);
         DialogResult = DialogResult.OK;
         Close();
     }

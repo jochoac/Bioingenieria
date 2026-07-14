@@ -34,6 +34,7 @@ partial class UsersForm
         //
         usersGridView.AllowUserToAddRows = false;
         usersGridView.AllowUserToDeleteRows = false;
+        usersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         usersGridView.Columns.AddRange(new DataGridViewColumn[] { usernameColumn, roleColumn, activeColumn });
         usersGridView.Dock = DockStyle.Fill;
         usersGridView.Location = new System.Drawing.Point(0, 0);

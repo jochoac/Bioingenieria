@@ -6,11 +6,13 @@ public partial class AdminForm : Form
 {
     private readonly EquipmentService _equipmentService;
     private readonly UserService _userService;
+    private readonly ScheduleService _scheduleService;
 
-    public AdminForm(EquipmentService equipmentService, UserService userService)
+    public AdminForm(EquipmentService equipmentService, UserService userService, ScheduleService scheduleService)
     {
         _equipmentService = equipmentService;
         _userService = userService;
+        _scheduleService = scheduleService;
 
         InitializeComponent();
         LoadTree();
@@ -71,6 +73,12 @@ public partial class AdminForm : Form
     private void ManageUsersButton_Click(object? sender, EventArgs e)
     {
         using var form = new UsersForm(_userService);
+        form.ShowDialog(this);
+    }
+
+    private void SchedulesButton_Click(object? sender, EventArgs e)
+    {
+        using var form = new CronogramaForm(_scheduleService);
         form.ShowDialog(this);
     }
 }

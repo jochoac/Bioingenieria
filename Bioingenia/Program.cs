@@ -18,11 +18,12 @@ static class Program
         if (loginForm.ShowDialog() != DialogResult.OK
             || loginForm.AuthenticatedUser is null
             || loginForm.EquipmentService is null
-            || loginForm.UserService is null)
+            || loginForm.UserService is null
+            || loginForm.ScheduleService is null)
         {
             return;
         }
 
-        Application.Run(new MainForm(loginForm.EquipmentService, loginForm.UserService, loginForm.AuthenticatedUser));
+        Application.Run(new MainForm(loginForm.EquipmentService, loginForm.UserService, loginForm.ScheduleService, loginForm.AuthenticatedUser));
     }
 }
