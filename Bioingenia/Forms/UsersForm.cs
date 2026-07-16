@@ -1,4 +1,5 @@
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -10,6 +11,11 @@ public partial class UsersForm : Form
     {
         _userService = userService;
         InitializeComponent();
+        this.ApplyAppIcon();
+        usersGridView.ApplyTheme();
+        newUserButton.ApplyPrimaryStyle();
+        editUserButton.ApplySecondaryStyle();
+        closeButton.ApplySecondaryStyle();
         LoadUsers();
     }
 

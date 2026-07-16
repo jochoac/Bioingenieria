@@ -1,4 +1,5 @@
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -10,6 +11,9 @@ public partial class NewEquipmentForm : Form
     {
         _equipmentService = equipmentService;
         InitializeComponent();
+        this.ApplyAppIcon();
+        saveButton.ApplyPrimaryStyle();
+        cancelButton.ApplySecondaryStyle();
     }
 
     private void SaveButton_Click(object? sender, EventArgs e)

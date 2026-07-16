@@ -1,4 +1,5 @@
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -15,6 +16,11 @@ public partial class AdminForm : Form
         _scheduleService = scheduleService;
 
         InitializeComponent();
+        this.ApplyAppIcon();
+        newEquipmentButton.ApplySecondaryStyle();
+        uploadDocumentButton.ApplySecondaryStyle();
+        manageUsersButton.ApplySecondaryStyle();
+        schedulesButton.ApplySecondaryStyle();
         LoadTree();
     }
 

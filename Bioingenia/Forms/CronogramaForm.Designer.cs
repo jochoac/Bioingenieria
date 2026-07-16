@@ -1,3 +1,5 @@
+using Bioingenieria.Controls;
+using Bioingenieria.Theme;
 using ScottPlot.WinForms;
 
 namespace Bioingenieria.Forms;
@@ -66,6 +68,7 @@ partial class CronogramaForm
         complianceBreadcrumbLabel = new LinkLabel();
         bottomPanel = new Panel();
         closeButton = new Button();
+        headerControl = new FormHeaderControl();
         topPanel.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)yearUpDown).BeginInit();
         alertPanel.SuspendLayout();
@@ -83,6 +86,7 @@ partial class CronogramaForm
         //
         // topPanel
         //
+        topPanel.BackColor = Color.White;
         topPanel.Controls.Add(statusLabel);
         topPanel.Controls.Add(importButton);
         topPanel.Controls.Add(yearUpDown);
@@ -156,6 +160,7 @@ partial class CronogramaForm
         //
         // alertPanel
         //
+        alertPanel.BackColor = Color.White;
         alertPanel.Controls.Add(alertToggleLabel);
         alertPanel.Controls.Add(alertSummaryLabel);
         alertPanel.Dock = DockStyle.Top;
@@ -511,6 +516,7 @@ partial class CronogramaForm
         //
         // bottomPanel
         //
+        bottomPanel.BackColor = Color.White;
         bottomPanel.Controls.Add(closeButton);
         bottomPanel.Dock = DockStyle.Bottom;
         bottomPanel.Location = new System.Drawing.Point(0, 624);
@@ -528,20 +534,30 @@ partial class CronogramaForm
         closeButton.Size = new System.Drawing.Size(120, 32);
         closeButton.TabIndex = 0;
         closeButton.Text = "Cerrar";
-        closeButton.UseVisualStyleBackColor = true;
+        //
+        // headerControl
+        //
+        headerControl.Dock = DockStyle.Top;
+        headerControl.Location = new System.Drawing.Point(0, 0);
+        headerControl.Name = "headerControl";
+        headerControl.Size = new System.Drawing.Size(1300, 48);
+        headerControl.TabIndex = 5;
+        headerControl.Title = "Cronogramas de mantenimiento y calibración";
         //
         // CronogramaForm
         //
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = AppColors.Surface;
         CancelButton = closeButton;
-        ClientSize = new System.Drawing.Size(1300, 820);
+        ClientSize = new System.Drawing.Size(1300, 868);
         Controls.Add(tabControl);
         Controls.Add(alertGridView);
         Controls.Add(alertPanel);
         Controls.Add(topPanel);
+        Controls.Add(headerControl);
         Controls.Add(bottomPanel);
-        MinimumSize = new System.Drawing.Size(1000, 650);
+        MinimumSize = new System.Drawing.Size(1000, 698);
         Name = "CronogramaForm";
         StartPosition = FormStartPosition.CenterParent;
         Text = "Cronogramas de mantenimiento y calibración";
@@ -613,4 +629,5 @@ partial class CronogramaForm
     private DataGridViewTextBoxColumn complianceSemaphoreColumn;
     private Panel bottomPanel;
     private Button closeButton;
+    private FormHeaderControl headerControl;
 }

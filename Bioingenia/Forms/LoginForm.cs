@@ -1,5 +1,6 @@
 using Bioingenieria.Models;
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -15,6 +16,8 @@ public partial class LoginForm : Form
     public LoginForm()
     {
         InitializeComponent();
+        this.ApplyAppIcon();
+        logoPictureBox.LoadAppLogo();
     }
 
     private void LoginForm_Load(object? sender, EventArgs e)

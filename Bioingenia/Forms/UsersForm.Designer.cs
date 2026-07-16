@@ -1,3 +1,6 @@
+using Bioingenieria.Controls;
+using Bioingenieria.Theme;
+
 namespace Bioingenieria.Forms;
 
 partial class UsersForm
@@ -26,6 +29,7 @@ partial class UsersForm
         closeButton = new Button();
         editUserButton = new Button();
         newUserButton = new Button();
+        headerControl = new FormHeaderControl();
         ((System.ComponentModel.ISupportInitialize)usersGridView).BeginInit();
         bottomPanel.SuspendLayout();
         SuspendLayout();
@@ -37,14 +41,14 @@ partial class UsersForm
         usersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         usersGridView.Columns.AddRange(new DataGridViewColumn[] { usernameColumn, roleColumn, activeColumn });
         usersGridView.Dock = DockStyle.Fill;
-        usersGridView.Location = new System.Drawing.Point(0, 0);
+        usersGridView.Location = new System.Drawing.Point(0, 48);
         usersGridView.MultiSelect = false;
         usersGridView.Name = "usersGridView";
         usersGridView.ReadOnly = true;
         usersGridView.RowHeadersVisible = false;
         usersGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        usersGridView.Size = new System.Drawing.Size(560, 350);
-        usersGridView.TabIndex = 0;
+        usersGridView.Size = new System.Drawing.Size(560, 302);
+        usersGridView.TabIndex = 1;
         //
         // usernameColumn
         //
@@ -69,6 +73,7 @@ partial class UsersForm
         //
         // bottomPanel
         //
+        bottomPanel.BackColor = Color.White;
         bottomPanel.Controls.Add(closeButton);
         bottomPanel.Controls.Add(editUserButton);
         bottomPanel.Controls.Add(newUserButton);
@@ -77,7 +82,7 @@ partial class UsersForm
         bottomPanel.Name = "bottomPanel";
         bottomPanel.Padding = new Padding(12);
         bottomPanel.Size = new System.Drawing.Size(560, 56);
-        bottomPanel.TabIndex = 1;
+        bottomPanel.TabIndex = 2;
         //
         // newUserButton
         //
@@ -86,7 +91,6 @@ partial class UsersForm
         newUserButton.Size = new System.Drawing.Size(140, 32);
         newUserButton.TabIndex = 0;
         newUserButton.Text = "Nuevo usuario";
-        newUserButton.UseVisualStyleBackColor = true;
         newUserButton.Click += NewUserButton_Click;
         //
         // editUserButton
@@ -96,7 +100,6 @@ partial class UsersForm
         editUserButton.Size = new System.Drawing.Size(140, 32);
         editUserButton.TabIndex = 1;
         editUserButton.Text = "Editar usuario";
-        editUserButton.UseVisualStyleBackColor = true;
         editUserButton.Click += EditUserButton_Click;
         //
         // closeButton
@@ -107,16 +110,26 @@ partial class UsersForm
         closeButton.Size = new System.Drawing.Size(120, 32);
         closeButton.TabIndex = 2;
         closeButton.Text = "Cerrar";
-        closeButton.UseVisualStyleBackColor = true;
+        //
+        // headerControl
+        //
+        headerControl.Dock = DockStyle.Top;
+        headerControl.Location = new System.Drawing.Point(0, 0);
+        headerControl.Name = "headerControl";
+        headerControl.Size = new System.Drawing.Size(560, 48);
+        headerControl.TabIndex = 0;
+        headerControl.Title = "Gestionar usuarios";
         //
         // UsersForm
         //
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = AppColors.Surface;
         CancelButton = closeButton;
         ClientSize = new System.Drawing.Size(560, 406);
         Controls.Add(usersGridView);
         Controls.Add(bottomPanel);
+        Controls.Add(headerControl);
         MinimumSize = new System.Drawing.Size(500, 350);
         Name = "UsersForm";
         StartPosition = FormStartPosition.CenterParent;
@@ -136,4 +149,5 @@ partial class UsersForm
     private Button newUserButton;
     private Button editUserButton;
     private Button closeButton;
+    private FormHeaderControl headerControl;
 }

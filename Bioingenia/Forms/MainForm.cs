@@ -1,6 +1,7 @@
 using Bioingenieria.Controls;
 using Bioingenieria.Models;
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -19,6 +20,8 @@ public partial class MainForm : Form
         _currentUser = currentUser;
 
         InitializeComponent();
+        this.ApplyAppIcon();
+        logoPictureBox.LoadAppLogo();
 
         adminButton.Visible = _currentUser.Role == UserRole.Administrator;
         Text = $"Buscador de Documentación por Equipo — {_currentUser.Username}";

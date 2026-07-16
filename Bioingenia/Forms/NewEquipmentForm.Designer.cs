@@ -1,3 +1,6 @@
+using Bioingenieria.Controls;
+using Bioingenieria.Theme;
+
 namespace Bioingenieria.Forms;
 
 partial class NewEquipmentForm
@@ -25,12 +28,14 @@ partial class NewEquipmentForm
         errorLabel = new Label();
         saveButton = new Button();
         cancelButton = new Button();
+        headerControl = new FormHeaderControl();
         SuspendLayout();
         //
         // serialLabel
         //
         serialLabel.AutoSize = true;
-        serialLabel.Location = new System.Drawing.Point(20, 20);
+        serialLabel.ForeColor = AppColors.Text;
+        serialLabel.Location = new System.Drawing.Point(20, 68);
         serialLabel.Name = "serialLabel";
         serialLabel.Size = new System.Drawing.Size(140, 20);
         serialLabel.TabIndex = 0;
@@ -38,7 +43,7 @@ partial class NewEquipmentForm
         //
         // serialTextBox
         //
-        serialTextBox.Location = new System.Drawing.Point(20, 43);
+        serialTextBox.Location = new System.Drawing.Point(20, 91);
         serialTextBox.Name = "serialTextBox";
         serialTextBox.Size = new System.Drawing.Size(280, 27);
         serialTextBox.TabIndex = 1;
@@ -46,7 +51,8 @@ partial class NewEquipmentForm
         // nameLabel
         //
         nameLabel.AutoSize = true;
-        nameLabel.Location = new System.Drawing.Point(20, 80);
+        nameLabel.ForeColor = AppColors.Text;
+        nameLabel.Location = new System.Drawing.Point(20, 128);
         nameLabel.Name = "nameLabel";
         nameLabel.Size = new System.Drawing.Size(120, 20);
         nameLabel.TabIndex = 2;
@@ -54,7 +60,7 @@ partial class NewEquipmentForm
         //
         // nameTextBox
         //
-        nameTextBox.Location = new System.Drawing.Point(20, 103);
+        nameTextBox.Location = new System.Drawing.Point(20, 151);
         nameTextBox.Name = "nameTextBox";
         nameTextBox.Size = new System.Drawing.Size(280, 27);
         nameTextBox.TabIndex = 3;
@@ -62,8 +68,8 @@ partial class NewEquipmentForm
         // errorLabel
         //
         errorLabel.AutoSize = true;
-        errorLabel.ForeColor = System.Drawing.Color.Firebrick;
-        errorLabel.Location = new System.Drawing.Point(20, 138);
+        errorLabel.ForeColor = AppColors.Critical;
+        errorLabel.Location = new System.Drawing.Point(20, 186);
         errorLabel.MaximumSize = new System.Drawing.Size(280, 0);
         errorLabel.Name = "errorLabel";
         errorLabel.Size = new System.Drawing.Size(0, 20);
@@ -72,31 +78,39 @@ partial class NewEquipmentForm
         //
         // saveButton
         //
-        saveButton.Location = new System.Drawing.Point(20, 180);
+        saveButton.Location = new System.Drawing.Point(20, 228);
         saveButton.Name = "saveButton";
         saveButton.Size = new System.Drawing.Size(130, 32);
         saveButton.TabIndex = 5;
         saveButton.Text = "Guardar";
-        saveButton.UseVisualStyleBackColor = true;
         saveButton.Click += SaveButton_Click;
         //
         // cancelButton
         //
         cancelButton.DialogResult = DialogResult.Cancel;
-        cancelButton.Location = new System.Drawing.Point(170, 180);
+        cancelButton.Location = new System.Drawing.Point(170, 228);
         cancelButton.Name = "cancelButton";
         cancelButton.Size = new System.Drawing.Size(130, 32);
         cancelButton.TabIndex = 6;
         cancelButton.Text = "Cancelar";
-        cancelButton.UseVisualStyleBackColor = true;
+        //
+        // headerControl
+        //
+        headerControl.Dock = DockStyle.Top;
+        headerControl.Location = new System.Drawing.Point(0, 0);
+        headerControl.Name = "headerControl";
+        headerControl.Size = new System.Drawing.Size(320, 48);
+        headerControl.TabIndex = 7;
+        headerControl.Title = "Nuevo equipo";
         //
         // NewEquipmentForm
         //
         AcceptButton = saveButton;
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = AppColors.Surface;
         CancelButton = cancelButton;
-        ClientSize = new System.Drawing.Size(320, 230);
+        ClientSize = new System.Drawing.Size(320, 278);
         Controls.Add(serialLabel);
         Controls.Add(serialTextBox);
         Controls.Add(nameLabel);
@@ -104,6 +118,7 @@ partial class NewEquipmentForm
         Controls.Add(errorLabel);
         Controls.Add(saveButton);
         Controls.Add(cancelButton);
+        Controls.Add(headerControl);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         MinimizeBox = false;
@@ -123,4 +138,5 @@ partial class NewEquipmentForm
     private Label errorLabel;
     private Button saveButton;
     private Button cancelButton;
+    private FormHeaderControl headerControl;
 }

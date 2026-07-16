@@ -1,14 +1,15 @@
 using Bioingenieria.Models;
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 using ScottPlot;
 
 namespace Bioingenieria.Forms;
 
 public partial class CronogramaForm : Form
 {
-    private static readonly System.Drawing.Color GoodColor = System.Drawing.ColorTranslator.FromHtml("#0CA30C");
-    private static readonly System.Drawing.Color WarningColor = System.Drawing.ColorTranslator.FromHtml("#FAB219");
-    private static readonly System.Drawing.Color CriticalColor = System.Drawing.ColorTranslator.FromHtml("#D03B3B");
+    private static readonly System.Drawing.Color GoodColor = AppColors.Success;
+    private static readonly System.Drawing.Color WarningColor = AppColors.Warning;
+    private static readonly System.Drawing.Color CriticalColor = AppColors.Critical;
 
     private readonly ScheduleService _scheduleService;
     private ScheduleType _currentType = ScheduleType.Maintenance;
@@ -22,8 +23,18 @@ public partial class CronogramaForm : Form
         _scheduleService = scheduleService;
 
         InitializeComponent();
+        this.ApplyAppIcon();
         plotView.Plot.Benchmark.IsVisible = false;
         semesterPlotView.Plot.Benchmark.IsVisible = false;
+
+        alertGridView.ApplyTheme();
+        areaGridView.ApplyTheme();
+        complianceLevelGridView.ApplyTheme();
+        importButton.ApplySecondaryStyle();
+        closeButton.ApplySecondaryStyle();
+        breadcrumbLabel.LinkColor = AppColors.Primary;
+        complianceBreadcrumbLabel.LinkColor = AppColors.Primary;
+        alertToggleLabel.LinkColor = AppColors.Primary;
 
         yearUpDown.Value = DateTime.Today.Year;
         SelectSemester(_semester);
@@ -87,10 +98,8 @@ public partial class CronogramaForm : Form
     {
         _currentType = type;
 
-        maintenanceTypeButton.BackColor = type == ScheduleType.Maintenance ? SystemColors.Highlight : SystemColors.Control;
-        maintenanceTypeButton.ForeColor = type == ScheduleType.Maintenance ? SystemColors.HighlightText : SystemColors.ControlText;
-        calibrationTypeButton.BackColor = type == ScheduleType.Calibration ? SystemColors.Highlight : SystemColors.Control;
-        calibrationTypeButton.ForeColor = type == ScheduleType.Calibration ? SystemColors.HighlightText : SystemColors.ControlText;
+        maintenanceTypeButton.SetToggleState(type == ScheduleType.Maintenance);
+        calibrationTypeButton.SetToggleState(type == ScheduleType.Calibration);
 
         RefreshView();
     }
@@ -99,10 +108,8 @@ public partial class CronogramaForm : Form
     {
         _semester = semester;
 
-        firstHalfButton.BackColor = semester == Semester.FirstHalf ? SystemColors.Highlight : SystemColors.Control;
-        firstHalfButton.ForeColor = semester == Semester.FirstHalf ? SystemColors.HighlightText : SystemColors.ControlText;
-        secondHalfButton.BackColor = semester == Semester.SecondHalf ? SystemColors.Highlight : SystemColors.Control;
-        secondHalfButton.ForeColor = semester == Semester.SecondHalf ? SystemColors.HighlightText : SystemColors.ControlText;
+        firstHalfButton.SetToggleState(semester == Semester.FirstHalf);
+        secondHalfButton.SetToggleState(semester == Semester.SecondHalf);
     }
 
     private void AreaGridView_CellClick(object? sender, DataGridViewCellEventArgs e)
@@ -275,11 +282,13 @@ public partial class CronogramaForm : Form
             return;
         }
 
+        var barColor = ScottPlot.Color.FromHex(System.Drawing.ColorTranslator.ToHtml(AppColors.Primary));
         var bars = values
             .Select((value, index) => new Bar
             {
                 Position = index,
-                Value = value
+                Value = value,
+                FillColor = barColor
             })
             .ToList();
 
@@ -332,8 +341,8 @@ public partial class CronogramaForm : Form
 
         var slices = new List<PieSlice>
         {
-            new() { Value = summary.Scheduled, FillColor = ScottPlot.Color.FromHex("#2A78D6"), Label = "Programados", LegendText = "Programados" },
-            new() { Value = summary.Executed, FillColor = ScottPlot.Color.FromHex("#1BAF7A"), Label = "Ejecutados", LegendText = "Ejecutados" }
+            new() { Value = summary.Scheduled, FillColor = ScottPlot.Color.FromHex(System.Drawing.ColorTranslator.ToHtml(AppColors.Primary)), Label = "Programados", LegendText = "Programados" },
+            new() { Value = summary.Executed, FillColor = ScottPlot.Color.FromHex(System.Drawing.ColorTranslator.ToHtml(AppColors.Success)), Label = "Ejecutados", LegendText = "Ejecutados" }
         };
 
         semesterPlotView.Plot.Add.Pie(slices);

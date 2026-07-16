@@ -1,5 +1,6 @@
 using Bioingenieria.Models;
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -14,6 +15,9 @@ public partial class UserEditForm : Form
         _existingUsername = existingUsername;
 
         InitializeComponent();
+        this.ApplyAppIcon();
+        saveButton.ApplyPrimaryStyle();
+        cancelButton.ApplySecondaryStyle();
         roleComboBox.Items.AddRange(Enum.GetValues<UserRole>().Cast<object>().ToArray());
 
         if (_existingUsername is not null)

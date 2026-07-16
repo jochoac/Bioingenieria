@@ -1,3 +1,5 @@
+using Bioingenieria.Theme;
+
 namespace Bioingenieria.Controls;
 
 partial class EquipmentCardControl
@@ -28,6 +30,7 @@ partial class EquipmentCardControl
         titleLabel.AutoSize = true;
         titleLabel.Dock = DockStyle.Top;
         titleLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+        titleLabel.ForeColor = AppColors.PrimaryDark;
         titleLabel.Location = new Point(8, 8);
         titleLabel.Name = "titleLabel";
         titleLabel.Padding = new Padding(0, 0, 0, 6);
@@ -61,25 +64,22 @@ partial class EquipmentCardControl
         // deleteButton
         //
         deleteButton.AutoSize = true;
-        deleteButton.FlatStyle = FlatStyle.Flat;
-        deleteButton.FlatAppearance.BorderColor = Color.Firebrick;
-        deleteButton.ForeColor = Color.Firebrick;
         deleteButton.Margin = new Padding(4);
         deleteButton.Name = "deleteButton";
         deleteButton.TabIndex = 0;
         deleteButton.Text = "Eliminar";
-        deleteButton.UseVisualStyleBackColor = true;
         deleteButton.Click += deleteButton_Click;
         //
         // EquipmentCardControl
         //
-        BorderStyle = BorderStyle.FixedSingle;
+        BackColor = Color.White;
+        BorderStyle = BorderStyle.None;
         Controls.Add(chipsPanel);
         Controls.Add(titleLabel);
         Controls.Add(actionsPanel);
         Margin = new Padding(8);
         Name = "EquipmentCardControl";
-        Padding = new Padding(8);
+        Padding = new Padding(14, 10, 10, 10);
         Size = new Size(360, 123);
         actionsPanel.ResumeLayout(false);
         actionsPanel.PerformLayout();

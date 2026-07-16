@@ -1,4 +1,5 @@
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Forms;
 
@@ -11,6 +12,10 @@ public partial class UploadDocumentForm : Form
     {
         _equipmentService = equipmentService;
         InitializeComponent();
+        this.ApplyAppIcon();
+        saveButton.ApplyPrimaryStyle();
+        cancelButton.ApplySecondaryStyle();
+        browseButton.ApplySecondaryStyle();
         LoadEquipmentOptions();
         LoadCategoryOptions();
     }

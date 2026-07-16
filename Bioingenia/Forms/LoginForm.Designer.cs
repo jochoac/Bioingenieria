@@ -1,3 +1,5 @@
+using Bioingenieria.Theme;
+
 namespace Bioingenieria.Forms;
 
 partial class LoginForm
@@ -18,66 +20,97 @@ partial class LoginForm
 
     private void InitializeComponent()
     {
+        logoPictureBox = new PictureBox();
+        titleLabel = new Label();
         usernameLabel = new Label();
         usernameTextBox = new TextBox();
         passwordLabel = new Label();
         passwordTextBox = new TextBox();
         loginButton = new Button();
         errorLabel = new Label();
+        ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
         SuspendLayout();
+        //
+        // logoPictureBox
+        //
+        logoPictureBox.Location = new System.Drawing.Point(118, 20);
+        logoPictureBox.Name = "logoPictureBox";
+        logoPictureBox.Size = new System.Drawing.Size(84, 84);
+        logoPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        logoPictureBox.TabIndex = 0;
+        logoPictureBox.TabStop = false;
+        //
+        // titleLabel
+        //
+        titleLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+        titleLabel.ForeColor = AppColors.PrimaryDark;
+        titleLabel.Location = new System.Drawing.Point(10, 110);
+        titleLabel.Name = "titleLabel";
+        titleLabel.Size = new System.Drawing.Size(300, 30);
+        titleLabel.TabIndex = 1;
+        titleLabel.Text = "Bioingenia";
+        titleLabel.TextAlign = ContentAlignment.MiddleCenter;
         //
         // usernameLabel
         //
         usernameLabel.AutoSize = true;
-        usernameLabel.Location = new System.Drawing.Point(20, 20);
+        usernameLabel.ForeColor = AppColors.Text;
+        usernameLabel.Location = new System.Drawing.Point(30, 155);
         usernameLabel.Name = "usernameLabel";
         usernameLabel.Size = new System.Drawing.Size(76, 20);
-        usernameLabel.TabIndex = 0;
+        usernameLabel.TabIndex = 2;
         usernameLabel.Text = "Usuario";
         //
         // usernameTextBox
         //
-        usernameTextBox.Location = new System.Drawing.Point(20, 43);
+        usernameTextBox.Location = new System.Drawing.Point(30, 178);
         usernameTextBox.Name = "usernameTextBox";
         usernameTextBox.Size = new System.Drawing.Size(260, 27);
-        usernameTextBox.TabIndex = 1;
+        usernameTextBox.TabIndex = 3;
         //
         // passwordLabel
         //
         passwordLabel.AutoSize = true;
-        passwordLabel.Location = new System.Drawing.Point(20, 80);
+        passwordLabel.ForeColor = AppColors.Text;
+        passwordLabel.Location = new System.Drawing.Point(30, 215);
         passwordLabel.Name = "passwordLabel";
         passwordLabel.Size = new System.Drawing.Size(102, 20);
-        passwordLabel.TabIndex = 2;
+        passwordLabel.TabIndex = 4;
         passwordLabel.Text = "Contraseña";
         //
         // passwordTextBox
         //
-        passwordTextBox.Location = new System.Drawing.Point(20, 103);
+        passwordTextBox.Location = new System.Drawing.Point(30, 238);
         passwordTextBox.Name = "passwordTextBox";
         passwordTextBox.Size = new System.Drawing.Size(260, 27);
-        passwordTextBox.TabIndex = 3;
+        passwordTextBox.TabIndex = 5;
         passwordTextBox.UseSystemPasswordChar = true;
         //
         // errorLabel
         //
         errorLabel.AutoSize = true;
-        errorLabel.ForeColor = System.Drawing.Color.Firebrick;
-        errorLabel.Location = new System.Drawing.Point(20, 138);
+        errorLabel.ForeColor = AppColors.Critical;
+        errorLabel.Location = new System.Drawing.Point(30, 273);
         errorLabel.MaximumSize = new System.Drawing.Size(260, 0);
         errorLabel.Name = "errorLabel";
         errorLabel.Size = new System.Drawing.Size(0, 20);
-        errorLabel.TabIndex = 4;
+        errorLabel.TabIndex = 6;
         errorLabel.Visible = false;
         //
         // loginButton
         //
-        loginButton.Location = new System.Drawing.Point(20, 168);
+        loginButton.BackColor = AppColors.Primary;
+        loginButton.FlatAppearance.BorderSize = 0;
+        loginButton.FlatAppearance.MouseOverBackColor = AppColors.PrimaryDark;
+        loginButton.FlatStyle = FlatStyle.Flat;
+        loginButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+        loginButton.ForeColor = Color.White;
+        loginButton.Location = new System.Drawing.Point(30, 303);
         loginButton.Name = "loginButton";
-        loginButton.Size = new System.Drawing.Size(260, 32);
-        loginButton.TabIndex = 5;
+        loginButton.Size = new System.Drawing.Size(260, 36);
+        loginButton.TabIndex = 7;
         loginButton.Text = "Iniciar sesión";
-        loginButton.UseVisualStyleBackColor = true;
+        loginButton.UseVisualStyleBackColor = false;
         loginButton.Click += LoginButton_Click;
         //
         // LoginForm
@@ -85,7 +118,10 @@ partial class LoginForm
         AcceptButton = loginButton;
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(300, 220);
+        BackColor = AppColors.Surface;
+        ClientSize = new System.Drawing.Size(320, 370);
+        Controls.Add(logoPictureBox);
+        Controls.Add(titleLabel);
         Controls.Add(usernameLabel);
         Controls.Add(usernameTextBox);
         Controls.Add(passwordLabel);
@@ -99,12 +135,15 @@ partial class LoginForm
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Iniciar sesión";
         Load += LoginForm_Load;
+        ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
 
+    private PictureBox logoPictureBox;
+    private Label titleLabel;
     private Label usernameLabel;
     private TextBox usernameTextBox;
     private Label passwordLabel;

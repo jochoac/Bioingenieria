@@ -7,11 +7,21 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Bioingenieria</RootNamespace>
+        <ApplicationIcon>Resources\app.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="ClosedXML" Version="0.105.0" />
       <PackageReference Include="ScottPlot.WinForms" Version="5.1.59" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Resources\logo.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Resources\app.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

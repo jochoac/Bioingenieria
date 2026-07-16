@@ -1,20 +1,46 @@
+using System.Drawing.Drawing2D;
 using Bioingenieria.Models;
 using Bioingenieria.Services;
+using Bioingenieria.Theme;
 
 namespace Bioingenieria.Controls;
 
 public partial class EquipmentCardControl : UserControl
 {
+    private const int CornerRadius = 10;
+    private const int AccentStripWidth = 4;
+
     private readonly EquipmentService _equipmentService;
     private string? _serialNumber;
+    private bool _hovered;
 
     public event EventHandler? EquipmentDeleted;
 
     public EquipmentCardControl(EquipmentService equipmentService, bool isAdmin)
     {
         _equipmentService = equipmentService;
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
         InitializeComponent();
         actionsPanel.Visible = isAdmin;
+        deleteButton.ApplyDangerStyle();
+
+        this.ApplyRoundedCorners(CornerRadius);
+        MouseEnter += (_, _) => { _hovered = true; Invalidate(); };
+        MouseLeave += (_, _) => { _hovered = false; Invalidate(); };
+    }
+
+    protected override void OnPaint(PaintEventArgs e)
+    {
+        base.OnPaint(e);
+
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+        using var accentBrush = new SolidBrush(AppColors.Primary);
+        e.Graphics.FillRectangle(accentBrush, 0, 0, AccentStripWidth, Height);
+
+        using var borderPath = UiExtensions.RoundedRectPath(new Rectangle(0, 0, Width - 1, Height - 1), CornerRadius);
+        using var borderPen = new Pen(_hovered ? AppColors.Accent : AppColors.Border, 1.5f);
+        e.Graphics.DrawPath(borderPen, borderPath);
     }
 
     public void SetEquipment(Equipment equipment)
@@ -30,8 +56,14 @@ public partial class EquipmentCardControl : UserControl
                 Text = category.DisplayName,
                 AutoSize = true,
                 Margin = new Padding(4),
-                UseVisualStyleBackColor = true
+                FlatStyle = FlatStyle.Flat,
+                BackColor = AppColors.Surface,
+                ForeColor = AppColors.PrimaryDark,
+                UseVisualStyleBackColor = false
             };
+            chip.FlatAppearance.BorderColor = AppColors.Border;
+            chip.Cursor = Cursors.Hand;
+            chip.ApplyRoundedCorners(12);
 
             chip.Click += (_, _) => OnCategoryChipClick(category);
             chipsPanel.Controls.Add(chip);

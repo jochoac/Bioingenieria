@@ -1,3 +1,6 @@
+using Bioingenieria.Controls;
+using Bioingenieria.Theme;
+
 namespace Bioingenieria.Forms;
 
 partial class UploadDocumentForm
@@ -28,12 +31,14 @@ partial class UploadDocumentForm
         errorLabel = new Label();
         saveButton = new Button();
         cancelButton = new Button();
+        headerControl = new FormHeaderControl();
         SuspendLayout();
         //
         // equipmentLabel
         //
         equipmentLabel.AutoSize = true;
-        equipmentLabel.Location = new System.Drawing.Point(20, 20);
+        equipmentLabel.ForeColor = AppColors.Text;
+        equipmentLabel.Location = new System.Drawing.Point(20, 68);
         equipmentLabel.Name = "equipmentLabel";
         equipmentLabel.Size = new System.Drawing.Size(70, 20);
         equipmentLabel.TabIndex = 0;
@@ -41,7 +46,7 @@ partial class UploadDocumentForm
         //
         // equipmentComboBox
         //
-        equipmentComboBox.Location = new System.Drawing.Point(20, 43);
+        equipmentComboBox.Location = new System.Drawing.Point(20, 91);
         equipmentComboBox.Name = "equipmentComboBox";
         equipmentComboBox.Size = new System.Drawing.Size(360, 28);
         equipmentComboBox.TabIndex = 1;
@@ -49,7 +54,8 @@ partial class UploadDocumentForm
         // categoryLabel
         //
         categoryLabel.AutoSize = true;
-        categoryLabel.Location = new System.Drawing.Point(20, 80);
+        categoryLabel.ForeColor = AppColors.Text;
+        categoryLabel.Location = new System.Drawing.Point(20, 128);
         categoryLabel.Name = "categoryLabel";
         categoryLabel.Size = new System.Drawing.Size(90, 20);
         categoryLabel.TabIndex = 2;
@@ -58,7 +64,7 @@ partial class UploadDocumentForm
         // categoryComboBox
         //
         categoryComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-        categoryComboBox.Location = new System.Drawing.Point(20, 103);
+        categoryComboBox.Location = new System.Drawing.Point(20, 151);
         categoryComboBox.Name = "categoryComboBox";
         categoryComboBox.Size = new System.Drawing.Size(360, 28);
         categoryComboBox.TabIndex = 3;
@@ -66,7 +72,8 @@ partial class UploadDocumentForm
         // filePathLabel
         //
         filePathLabel.AutoSize = true;
-        filePathLabel.Location = new System.Drawing.Point(20, 140);
+        filePathLabel.ForeColor = AppColors.Text;
+        filePathLabel.Location = new System.Drawing.Point(20, 188);
         filePathLabel.Name = "filePathLabel";
         filePathLabel.Size = new System.Drawing.Size(70, 20);
         filePathLabel.TabIndex = 4;
@@ -74,7 +81,7 @@ partial class UploadDocumentForm
         //
         // filePathTextBox
         //
-        filePathTextBox.Location = new System.Drawing.Point(20, 163);
+        filePathTextBox.Location = new System.Drawing.Point(20, 211);
         filePathTextBox.Name = "filePathTextBox";
         filePathTextBox.ReadOnly = true;
         filePathTextBox.Size = new System.Drawing.Size(270, 27);
@@ -82,19 +89,18 @@ partial class UploadDocumentForm
         //
         // browseButton
         //
-        browseButton.Location = new System.Drawing.Point(300, 162);
+        browseButton.Location = new System.Drawing.Point(300, 210);
         browseButton.Name = "browseButton";
         browseButton.Size = new System.Drawing.Size(80, 29);
         browseButton.TabIndex = 6;
         browseButton.Text = "Buscar...";
-        browseButton.UseVisualStyleBackColor = true;
         browseButton.Click += BrowseButton_Click;
         //
         // errorLabel
         //
         errorLabel.AutoSize = true;
-        errorLabel.ForeColor = System.Drawing.Color.Firebrick;
-        errorLabel.Location = new System.Drawing.Point(20, 198);
+        errorLabel.ForeColor = AppColors.Critical;
+        errorLabel.Location = new System.Drawing.Point(20, 246);
         errorLabel.MaximumSize = new System.Drawing.Size(360, 0);
         errorLabel.Name = "errorLabel";
         errorLabel.Size = new System.Drawing.Size(0, 20);
@@ -103,31 +109,39 @@ partial class UploadDocumentForm
         //
         // saveButton
         //
-        saveButton.Location = new System.Drawing.Point(20, 236);
+        saveButton.Location = new System.Drawing.Point(20, 284);
         saveButton.Name = "saveButton";
         saveButton.Size = new System.Drawing.Size(175, 32);
         saveButton.TabIndex = 8;
         saveButton.Text = "Guardar";
-        saveButton.UseVisualStyleBackColor = true;
         saveButton.Click += SaveButton_Click;
         //
         // cancelButton
         //
         cancelButton.DialogResult = DialogResult.Cancel;
-        cancelButton.Location = new System.Drawing.Point(205, 236);
+        cancelButton.Location = new System.Drawing.Point(205, 284);
         cancelButton.Name = "cancelButton";
         cancelButton.Size = new System.Drawing.Size(175, 32);
         cancelButton.TabIndex = 9;
         cancelButton.Text = "Cancelar";
-        cancelButton.UseVisualStyleBackColor = true;
+        //
+        // headerControl
+        //
+        headerControl.Dock = DockStyle.Top;
+        headerControl.Location = new System.Drawing.Point(0, 0);
+        headerControl.Name = "headerControl";
+        headerControl.Size = new System.Drawing.Size(400, 48);
+        headerControl.TabIndex = 10;
+        headerControl.Title = "Subir documento";
         //
         // UploadDocumentForm
         //
         AcceptButton = saveButton;
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = AppColors.Surface;
         CancelButton = cancelButton;
-        ClientSize = new System.Drawing.Size(400, 290);
+        ClientSize = new System.Drawing.Size(400, 338);
         Controls.Add(equipmentLabel);
         Controls.Add(equipmentComboBox);
         Controls.Add(categoryLabel);
@@ -138,6 +152,7 @@ partial class UploadDocumentForm
         Controls.Add(errorLabel);
         Controls.Add(saveButton);
         Controls.Add(cancelButton);
+        Controls.Add(headerControl);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         MinimizeBox = false;
@@ -160,4 +175,5 @@ partial class UploadDocumentForm
     private Label errorLabel;
     private Button saveButton;
     private Button cancelButton;
+    private FormHeaderControl headerControl;
 }
