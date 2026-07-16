@@ -83,6 +83,5 @@ public partial class LoginWindow : Window
         EquipmentService = new EquipmentService(_equipmentRootPath);
         ScheduleService = new ScheduleService(_equipmentRootPath);
         DialogResult = true;
-        Close();
     }
 }

@@ -9,6 +9,10 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        // Closing LoginWindow would otherwise trigger the default OnLastWindowClose shutdown
+        // before MainWindow ever gets created, since it's the only open window at that point.
+        ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
         var login = new LoginWindow();
         if (login.ShowDialog() != true
             || login.AuthenticatedUser is null
@@ -20,12 +24,9 @@ public partial class App : Application
             return;
         }
 
-        // MainWindow lands in the next migration step; for now, confirm login succeeded.
-        MessageBox.Show(
-            $"Login OK: {login.AuthenticatedUser.Username} ({login.AuthenticatedUser.Role})",
-            "Verificación temporal",
-            MessageBoxButton.OK,
-            MessageBoxImage.Information);
-        Shutdown();
+        var main = new MainWindow(login.EquipmentService, login.UserService, login.ScheduleService, login.AuthenticatedUser);
+        MainWindow = main;
+        ShutdownMode = ShutdownMode.OnMainWindowClose;
+        main.Show();
     }
 }
