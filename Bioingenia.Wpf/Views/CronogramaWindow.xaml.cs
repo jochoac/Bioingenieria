@@ -16,6 +16,7 @@ public partial class CronogramaWindow : Window
 
     private static readonly ScottPlot.Color PrimaryPlotColor = ScottPlot.Color.FromHex("#0078A8");
     private static readonly ScottPlot.Color SuccessPlotColor = ScottPlot.Color.FromHex("#1BAF7A");
+    private static readonly ScottPlot.Color NeutralPlotColor = ScottPlot.Color.FromHex("#C7D0D8");
 
     private readonly ScheduleService _scheduleService;
     private ScheduleType _currentType = ScheduleType.Maintenance;
@@ -316,10 +317,12 @@ public partial class CronogramaWindow : Window
             return;
         }
 
+        var notExecuted = Math.Max(0, summary.Scheduled - summary.Executed);
+
         var slices = new List<PieSlice>
         {
-            new() { Value = summary.Scheduled, FillColor = PrimaryPlotColor, Label = "Programados", LegendText = "Programados" },
-            new() { Value = summary.Executed, FillColor = SuccessPlotColor, Label = "Ejecutados", LegendText = "Ejecutados" }
+            new() { Value = summary.Executed, FillColor = SuccessPlotColor, Label = "Ejecutados", LegendText = "Ejecutados" },
+            new() { Value = notExecuted, FillColor = NeutralPlotColor, Label = "No ejecutados", LegendText = "No ejecutados" }
         };
 
         SemesterPlotView.Plot.Add.Pie(slices);
