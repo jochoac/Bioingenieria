@@ -42,7 +42,7 @@ public partial class EquipmentCardControl : UserControl
     {
         if (category.FilePaths.Count == 1)
         {
-            FileOpenerService.Open(category.FilePaths[0]);
+            OpenFile(category.FilePaths[0]);
             return;
         }
 
@@ -50,13 +50,25 @@ public partial class EquipmentCardControl : UserControl
         foreach (var filePath in category.FilePaths)
         {
             var item = new MenuItem { Header = Path.GetFileName(filePath) };
-            item.Click += (_, _) => FileOpenerService.Open(filePath);
+            item.Click += (_, _) => OpenFile(filePath);
             menu.Items.Add(item);
         }
 
         chip.ContextMenu = menu;
         menu.PlacementTarget = chip;
         menu.IsOpen = true;
+    }
+
+    private static void OpenFile(string filePath)
+    {
+        try
+        {
+            FileOpenerService.Open(filePath);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void DeleteButton_Click(object sender, RoutedEventArgs e)

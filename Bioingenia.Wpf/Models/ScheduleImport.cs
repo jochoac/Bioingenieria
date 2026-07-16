@@ -6,5 +6,6 @@ public class ScheduleImport
     public int Year { get; set; }
     public DateTime ImportedAtUtc { get; set; }
     public string SourceFileName { get; set; } = string.Empty;
+    public string SourceFilePath { get; set; } = string.Empty;
     public List<ScheduleEntry> Entries { get; set; } = new();
 }

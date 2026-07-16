@@ -34,6 +34,7 @@ public class ScheduleService
             Year = year,
             ImportedAtUtc = DateTime.UtcNow,
             SourceFileName = Path.GetFileName(filePath),
+            SourceFilePath = filePath,
             Entries = CronogramaExcelReader.Read(filePath)
         };
 

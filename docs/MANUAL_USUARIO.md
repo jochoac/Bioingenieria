@@ -97,6 +97,16 @@ Sección para seguimiento de mantenimiento y calibración de equipos:
 4. **Nivel de cumplimiento** muestra un semáforo (verde/amarillo/rojo) por área según qué tan atrasada está.
 5. Arriba a la derecha, **"Ver detalle"** despliega la lista de próximos vencimientos y vencidos.
 
+#### Editar el cronograma y actualizar los indicadores
+
+Los gráficos e indicadores **no se actualizan solos** cuando editas el archivo Excel — la app solo lee el archivo en el momento de importarlo. Para modificar un cronograma ya importado:
+
+1. Junto a la fecha de importación, haz clic en el nombre del archivo (aparece subrayado como un hipervínculo) para abrirlo con Excel u otro programa asociado a `.xlsx`.
+2. Edita y guarda los cambios en el archivo.
+3. Vuelve a Bioingenia y presiona **Importar...** otra vez, eligiendo el mismo archivo — esto reemplaza los datos y refresca todos los gráficos e indicadores de la pantalla.
+
+> El hipervínculo solo aparece si el cronograma fue importado con esta versión de la app y el archivo sigue existiendo en su ubicación original; para cronogramas importados con una versión anterior, el nombre se muestra como texto simple (sin enlace).
+
 ## 8. Roles
 
 | Rol | Puede |

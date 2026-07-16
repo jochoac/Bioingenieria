@@ -49,7 +49,14 @@ public partial class AdminWindow : Window
     {
         if (EquipmentTreeView.SelectedItem is TreeViewItem { Tag: string filePath } && File.Exists(filePath))
         {
-            FileOpenerService.Open(filePath);
+            try
+            {
+                FileOpenerService.Open(filePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

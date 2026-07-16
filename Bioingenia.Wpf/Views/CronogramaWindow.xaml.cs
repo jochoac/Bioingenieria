@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Bioingenieria.Models;
@@ -204,13 +205,44 @@ public partial class CronogramaWindow : Window
             return;
         }
 
-        StatusTextBlock.Text = $"Importado {import.ImportedAtUtc.ToLocalTime():dd/MM/yyyy HH:mm} — {import.SourceFileName} (año {import.Year})";
+        SetStatusText(import);
 
         _indicators = _scheduleService.ComputeIndicators(_currentType);
         DisplaySummary(_indicators);
         UpdateDrilldownView();
         UpdateComplianceLevelView();
         DisplaySemesterTab();
+    }
+
+    private void SetStatusText(ScheduleImport import)
+    {
+        StatusTextBlock.Inlines.Clear();
+        StatusTextBlock.Inlines.Add($"Importado {import.ImportedAtUtc.ToLocalTime():dd/MM/yyyy HH:mm} — ");
+
+        if (!string.IsNullOrEmpty(import.SourceFilePath) && File.Exists(import.SourceFilePath))
+        {
+            var link = new Hyperlink(new Run(import.SourceFileName)) { NavigateUri = new Uri(import.SourceFilePath) };
+            link.RequestNavigate += (_, e) =>
+            {
+                try
+                {
+                    FileOpenerService.Open(import.SourceFilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                e.Handled = true;
+            };
+            StatusTextBlock.Inlines.Add(link);
+        }
+        else
+        {
+            StatusTextBlock.Inlines.Add(import.SourceFileName);
+        }
+
+        StatusTextBlock.Inlines.Add($" (año {import.Year})");
     }
 
     private void DisplaySummary(ComplianceIndicators indicators)
