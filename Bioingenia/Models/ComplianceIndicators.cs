@@ -1,5 +1,12 @@
 namespace Bioingenieria.Models;
 
+public enum ComplianceSemaphore
+{
+    Green,
+    Yellow,
+    Red
+}
+
 public class AreaCompliance
 {
     public string Area { get; set; } = string.Empty;
@@ -9,8 +16,14 @@ public class AreaCompliance
     public int Early { get; set; }
     public int Late { get; set; }
     public int Overdue { get; set; }
+    public int MaxDelayWeeks { get; set; }
 
     public double CompliancePercentage => Scheduled == 0 ? 0 : Executed * 100.0 / Scheduled;
+
+    public ComplianceSemaphore Semaphore =>
+        MaxDelayWeeks >= 4 ? ComplianceSemaphore.Red :
+        MaxDelayWeeks >= 2 ? ComplianceSemaphore.Yellow :
+        ComplianceSemaphore.Green;
 
     public List<EquipmentCompliance> ByEquipment { get; set; } = new();
 }
@@ -25,8 +38,14 @@ public class EquipmentCompliance
     public int Early { get; set; }
     public int Late { get; set; }
     public int Overdue { get; set; }
+    public int MaxDelayWeeks { get; set; }
 
     public double CompliancePercentage => Scheduled == 0 ? 0 : Executed * 100.0 / Scheduled;
+
+    public ComplianceSemaphore Semaphore =>
+        MaxDelayWeeks >= 4 ? ComplianceSemaphore.Red :
+        MaxDelayWeeks >= 2 ? ComplianceSemaphore.Yellow :
+        ComplianceSemaphore.Green;
 }
 
 public class ComplianceIndicators

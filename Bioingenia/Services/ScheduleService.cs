@@ -105,13 +105,13 @@ public class ScheduleService
                 indicators.DelayHistogram[delta] = indicators.DelayHistogram.GetValueOrDefault(delta) + 1;
             }
 
-            for (var i = pairCount; i < scheduled.Count; i++)
+            foreach (var week in GetLeftoverScheduledWeeks(entry))
             {
                 indicators.Scheduled++;
                 area.Scheduled++;
                 equipment.Scheduled++;
 
-                if (scheduled[i] < currentWeek)
+                if (week < currentWeek)
                 {
                     indicators.Overdue++;
                     area.Overdue++;
@@ -126,6 +126,8 @@ public class ScheduleService
                 area.Executed++;
                 equipment.Executed++;
             }
+
+            equipment.MaxDelayWeeks = GetDelayWeeks(entry, currentWeek).DefaultIfEmpty(0).Max();
         }
 
         indicators.AverageLateWeeks = lateDeltas.Count == 0 ? 0 : lateDeltas.Average();
@@ -137,9 +139,85 @@ public class ScheduleService
                 .OrderBy(eq => eq.CompliancePercentage)
                 .ThenBy(eq => eq.EquipmentName, StringComparer.OrdinalIgnoreCase)
                 .ToList();
+            area.MaxDelayWeeks = area.ByEquipment.Select(eq => eq.MaxDelayWeeks).DefaultIfEmpty(0).Max();
         }
 
         return indicators;
+    }
+
+    public SemesterSummary ComputeSemesterSummary(ScheduleType type, Semester semester)
+    {
+        var import = GetImport(type);
+
+        if (import is null)
+        {
+            return new SemesterSummary();
+        }
+
+        var (start, end) = type == ScheduleType.Maintenance ? semester.GetWeekRange() : (1, 48);
+
+        return new SemesterSummary
+        {
+            Scheduled = import.Entries.Sum(e => e.ScheduledWeeks.Count(w => w >= start && w <= end)),
+            Executed = import.Entries.Sum(e => e.ExecutedWeeks.Count(w => w >= start && w <= end))
+        };
+    }
+
+    public List<UpcomingAlert> GetUpcomingAlerts(int withinDays = 30)
+    {
+        var today = DateTime.Today;
+
+        return Enum.GetValues<ScheduleType>()
+            .SelectMany(type => GetImport(type) is { } import
+                ? import.Entries.Select(entry => (Type: type, Year: import.Year, Entry: entry))
+                : Enumerable.Empty<(ScheduleType Type, int Year, ScheduleEntry Entry)>())
+            .Select(x => (x.Type, x.Entry, x.Year, DueWeek: GetLeftoverScheduledWeeks(x.Entry).DefaultIfEmpty(0).First()))
+            .Where(x => x.DueWeek > 0)
+            .Select(x => new UpcomingAlert
+            {
+                Type = x.Type,
+                Area = x.Entry.Area,
+                EquipmentName = x.Entry.EquipmentName,
+                InventoryTag = x.Entry.InventoryTag,
+                DueDate = AbsoluteWeekToDate(x.Year, x.DueWeek)
+            })
+            .Where(alert => (alert.DueDate - today).Days <= withinDays)
+            .OrderBy(alert => alert.DueDate)
+            .ToList();
+    }
+
+    private static DateTime AbsoluteWeekToDate(int year, int week)
+    {
+        var month = (week - 1) / 4 + 1;
+        var weekInMonth = (week - 1) % 4 + 1;
+        var day = (weekInMonth - 1) * 7 + 1;
+        return new DateTime(year, month, day);
+    }
+
+    private static List<int> GetLeftoverScheduledWeeks(ScheduleEntry entry)
+    {
+        var scheduled = entry.ScheduledWeeks.OrderBy(w => w).ToList();
+        var executed = entry.ExecutedWeeks.OrderBy(w => w).ToList();
+        var pairCount = Math.Min(scheduled.Count, executed.Count);
+
+        return scheduled.Skip(pairCount).ToList();
+    }
+
+    private static IEnumerable<int> GetDelayWeeks(ScheduleEntry entry, int currentWeek)
+    {
+        var scheduled = entry.ScheduledWeeks.OrderBy(w => w).ToList();
+        var executed = entry.ExecutedWeeks.OrderBy(w => w).ToList();
+        var pairCount = Math.Min(scheduled.Count, executed.Count);
+
+        var lateDelays = Enumerable.Range(0, pairCount)
+            .Select(i => executed[i] - scheduled[i])
+            .Where(delta => delta > 0);
+
+        var overdueDelays = GetLeftoverScheduledWeeks(entry)
+            .Where(week => week < currentWeek)
+            .Select(week => currentWeek - week);
+
+        return lateDelays.Concat(overdueDelays);
     }
 
     private static AreaCompliance GetOrAddArea(Dictionary<string, AreaCompliance> map, string area)
