@@ -4,23 +4,28 @@ Guía para contribuir a este proyecto (humanos o Claude Code).
 
 ## Resumen
 
-Bioingenia es una app de escritorio WinForms (.NET 9, `net9.0-windows`) que permite buscar y abrir la documentación técnica de equipos biomédicos por número de serie, con dos roles de usuario (Buscador / Administrador). Ver `README.md` para el uso funcional de la app.
+Bioingenia es una app de escritorio WPF (.NET 9, `net9.0-windows`) que permite buscar y abrir la documentación técnica de equipos biomédicos por número de serie, con dos roles de usuario (Buscador / Administrador). Ver `README.md` para el uso funcional de la app.
+
+La app fue originalmente WinForms y se migró completamente a WPF para superar el techo visual de WinForms (esquinas realmente redondeadas, mejores estados de hover, plantillas declarativas) — ver el historial de git de esa migración si hace falta contexto sobre decisiones tomadas en el camino.
 
 ## Stack y decisiones de arquitectura
 
-- .NET 9, WinForms, C#. El proyecto físico se llama `Bioingenia`, pero el `RootNamespace`/namespace raíz es **`Bioingenieria`** — no confundir los dos nombres al buscar código.
+- .NET 9, WPF, C#. El proyecto físico se llama `Bioingenia.Wpf`, pero el `RootNamespace`/namespace raíz es **`Bioingenieria`** — no confundir los nombres al buscar código.
 - **Sin base de datos.** El sistema de archivos es la fuente de verdad para equipos y documentos; JSON plano para configuración y usuarios (`config.json`, `usuarios.json`, `metadata.json` por equipo). Si en el futuro se necesitan reportes/auditoría complejos, migrar la capa `Services` a SQLite sin tocar la UI.
-- **Sin dependencias NuGet nuevas** salvo que sea estrictamente necesario — decisión explícita del proyecto. Todo lo implementado usa solo la BCL (`System.Text.Json`, `System.Security.Cryptography`, etc.).
+- **Sin dependencias NuGet nuevas** salvo que sea estrictamente necesario — decisión explícita del proyecto. La única dependencia UI es `ScottPlot.WPF` (gráficos de Cronogramas); `ClosedXML` para leer los `.xlsx` importados. El resto usa solo la BCL.
+- El proyecto referencia `Microsoft.WindowsDesktop.App.WindowsForms` como `FrameworkReference` (no `UseWindowsForms`) únicamente para poder usar `System.Windows.Forms.FolderBrowserDialog` en `LoginWindow` (WPF no tiene selector de carpetas nativo). Esa es la única razón de esa referencia — no agregar `using System.Windows.Forms;` en ningún archivo para no chocar con los tipos de `System.Windows`; el único uso está completamente calificado.
 
 ## Estructura de carpetas
 
 ```
-Bioingenia/
-  Models/       POCOs: Equipment, DocumentCategory, User, UserRole, AppConfigModel, EquipmentMetadata
-  Services/     Lógica de negocio e infraestructura (ver tabla abajo)
-  Controls/     UserControls reutilizables (EquipmentCardControl)
-  Forms/        Formularios WinForms, cada uno como .cs (lógica) + .Designer.cs (layout)
-  Program.cs    Entry point: LoginForm → MainForm
+Bioingenia.Wpf/
+  Models/       POCOs: Equipment, DocumentCategory, User, UserRole, AppConfigModel, EquipmentMetadata, etc.
+  Services/     Lógica de negocio e infraestructura (ver tabla abajo) — agnóstica de UI
+  Theme/        ResourceDictionaries (Colors, Buttons, DataGrid, Cards) con la paleta y los estilos compartidos
+  Controls/     UserControls reutilizables (EquipmentCardControl, FormHeaderControl)
+  Views/        Windows, cada uno como .xaml (layout) + .xaml.cs (lógica)
+  Resources/    logo.png, app.ico
+  App.xaml.cs   Entry point: LoginWindow → MainWindow
 ```
 
 ### Servicios
@@ -39,13 +44,14 @@ Bioingenia/
 ## Convenciones de código
 
 - **Los identificadores de código van siempre en inglés** (clases, métodos, variables, namespaces, archivos), aunque el dominio y la UI estén en español. Ej.: `Equipo` → `Equipment`, `Usuario` → `User`, `NumeroSerie` → `SerialNumber`. Los mensajes mostrados al usuario (`MessageBox`, labels, validaciones) sí van en español, porque son parte de la UI.
-- Cada `Form`/`UserControl` tiene su `.Designer.cs` escrito a mano, imitando el estilo que genera el diseñador visual de WinForms (no se usó el diseñador visual para crearlos). Al editarlos a mano hay que mantener esa convención: `SuspendLayout()`/`ResumeLayout()`, campos privados declarados al final de la clase parcial, nombres `PascalCase` para controles con sufijo del tipo de control cuando aplica (`saveButton`, `errorLabel`, etc.).
+- Estilo pragmático de code-behind, no MVVM: cada `Window`/`UserControl` maneja su propia lógica directamente en el `.xaml.cs` (sin ViewModels, `ICommand` ni `INotifyPropertyChanged`), igual que antes en WinForms. Los grids se pueblan asignando `ItemsSource` a una lista de un record local (p. ej. `UserRow`, `AreaRow` en `CronogramaWindow`) en vez de bindear directamente contra los modelos — así una fila puede exponer propiedades calculadas para mostrar (`CompliancePercentDisplay`, `SemaphoreBrush`) sin tocar `Models/`.
+- Los estilos compartidos viven en `Theme/*.xaml` (`PrimaryButtonStyle`, `SecondaryButtonStyle`, `DangerButtonStyle`, `ChipButtonStyle`, `ToggleButtonStyle`, `ThemedDataGridStyle`, `CardBorderStyle`) y se referencian por `StaticResource` — no dupliques colores/estilos inline en una Window nueva, agregalos ahí si hace falta una variante.
 - No introducir dependencias NuGet nuevas sin verificarlo con el usuario primero.
 
 ## Compilar y probar
 
 ```
-dotnet build Bioingenia/Bioingenia.csproj
+dotnet build Bioingenia.Wpf/Bioingenia.Wpf.csproj
 ```
 
 No hay tests automatizados todavía. Para probar manualmente:

@@ -1,6 +1,6 @@
 # Bioingenia — Buscador de Documentación por Equipo
 
-Aplicación de escritorio (WinForms, .NET 9) para organizar y localizar la documentación técnica de equipos biomédicos, identificados por número de serie.
+Aplicación de escritorio (WPF, .NET 9) para organizar y localizar la documentación técnica de equipos biomédicos, identificados por número de serie.
 
 ## Requisitos
 
@@ -71,6 +71,6 @@ La ruta de `EQUIPOS_ROOT` se guarda por PC en `%AppData%\Bioingenieria\config.js
 ## Compilar y ejecutar desde el código fuente
 
 ```
-dotnet build Bioingenia/Bioingenia.csproj
-dotnet run --project Bioingenia/Bioingenia.csproj
+dotnet build Bioingenia.Wpf/Bioingenia.Wpf.csproj
+dotnet run --project Bioingenia.Wpf/Bioingenia.Wpf.csproj
 ```

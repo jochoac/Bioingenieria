@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioingenia", "Bioingenia\Bioingenia.csproj", "{73ACD048-4600-430B-A787-84C4DE7DEFEA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bioingenia.Wpf", "Bioingenia.Wpf\Bioingenia.Wpf.csproj", "{15ED56E1-EB0D-4836-BBF0-21E3D5604124}"
 EndProject
 Global
@@ -14,18 +12,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|x64.Build.0 = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Debug|x86.Build.0 = Debug|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|x64.ActiveCfg = Release|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|x64.Build.0 = Release|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|x86.ActiveCfg = Release|Any CPU
-		{73ACD048-4600-430B-A787-84C4DE7DEFEA}.Release|x86.Build.0 = Release|Any CPU
 		{15ED56E1-EB0D-4836-BBF0-21E3D5604124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15ED56E1-EB0D-4836-BBF0-21E3D5604124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15ED56E1-EB0D-4836-BBF0-21E3D5604124}.Debug|x64.ActiveCfg = Debug|Any CPU
