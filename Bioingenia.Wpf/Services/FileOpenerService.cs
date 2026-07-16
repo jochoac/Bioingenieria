@@ -12,11 +12,7 @@ public static class FileOpenerService
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"No se pudo abrir el archivo:\n{filePath}\n\n{ex.Message}",
-                "Error al abrir archivo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+            throw new InvalidOperationException($"No se pudo abrir el archivo:\n{filePath}", ex);
         }
     }
 }
