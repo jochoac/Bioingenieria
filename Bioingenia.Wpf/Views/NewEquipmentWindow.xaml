@@ -1,0 +1,32 @@
+<Window x:Class="Bioingenieria.Views.NewEquipmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Bioingenieria.Controls"
+        Title="Nuevo equipo"
+        Height="278" Width="320"
+        Background="{StaticResource SurfaceBrush}"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Resources/app.ico">
+    <DockPanel>
+        <controls:FormHeaderControl DockPanel.Dock="Top" Title="Nuevo equipo" />
+        <StackPanel Margin="20">
+            <TextBlock Text="Número de serie" Foreground="{StaticResource TextBrush}" Margin="0,0,0,4" />
+            <TextBox x:Name="SerialTextBox" Height="27" Margin="0,0,0,16" />
+
+            <TextBlock Text="Nombre" Foreground="{StaticResource TextBrush}" Margin="0,0,0,4" />
+            <TextBox x:Name="NameTextBox" Height="27" Margin="0,0,0,16" />
+
+            <TextBlock x:Name="ErrorTextBlock"
+                       Foreground="{StaticResource CriticalBrush}"
+                       TextWrapping="Wrap"
+                       Visibility="Collapsed"
+                       Margin="0,0,0,16" />
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Guardar" Style="{StaticResource PrimaryButtonStyle}" Width="130" IsDefault="True" Click="SaveButton_Click" Margin="0,0,8,0" />
+                <Button Content="Cancelar" Style="{StaticResource SecondaryButtonStyle}" Width="130" IsCancel="True" />
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

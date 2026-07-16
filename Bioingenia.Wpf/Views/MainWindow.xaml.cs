@@ -46,8 +46,10 @@ public partial class MainWindow : Window
 
     private void AdminButton_Click(object sender, RoutedEventArgs e)
     {
-        // AdminWindow lands in a later migration step.
-        MessageBox.Show(this, "Administración aún no está migrada a WPF.", "Pendiente", MessageBoxButton.OK, MessageBoxImage.Information);
+        var adminWindow = new AdminWindow(_equipmentService, _userService, _scheduleService) { Owner = this };
+        adminWindow.ShowDialog();
+
+        DisplayResults(_equipmentService.SearchBySerial(SearchTextBox.Text));
     }
 
     private void DisplayResults(IReadOnlyList<Equipment> equipments)

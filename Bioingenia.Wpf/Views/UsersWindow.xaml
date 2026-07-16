@@ -1,0 +1,28 @@
+<Window x:Class="Bioingenieria.Views.UsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Bioingenieria.Controls"
+        Title="Gestionar usuarios"
+        Height="406" Width="560"
+        MinHeight="350" MinWidth="500"
+        Background="{StaticResource SurfaceBrush}"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Resources/app.ico">
+    <DockPanel>
+        <controls:FormHeaderControl DockPanel.Dock="Top" Title="Gestionar usuarios" />
+
+        <DockPanel DockPanel.Dock="Bottom" Background="White" LastChildFill="False">
+            <Button DockPanel.Dock="Right" Content="Cerrar" Style="{StaticResource SecondaryButtonStyle}" Width="120" IsCancel="True" Margin="0,12,12,12" />
+            <Button DockPanel.Dock="Left" Content="Nuevo usuario" Style="{StaticResource PrimaryButtonStyle}" Width="140" Click="NewUserButton_Click" Margin="12" />
+            <Button DockPanel.Dock="Left" Content="Editar usuario" Style="{StaticResource SecondaryButtonStyle}" Width="140" Click="EditUserButton_Click" Margin="0,12,0,12" />
+        </DockPanel>
+
+        <DataGrid x:Name="UsersDataGrid" Style="{StaticResource ThemedDataGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Usuario" Binding="{Binding Username}" Width="2*" />
+                <DataGridTextColumn Header="Rol" Binding="{Binding Role}" Width="1.5*" />
+                <DataGridTextColumn Header="Activo" Binding="{Binding ActiveDisplay}" Width="1.5*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>
