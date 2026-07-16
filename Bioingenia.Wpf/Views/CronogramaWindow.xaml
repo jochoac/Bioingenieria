@@ -1,0 +1,157 @@
+<Window x:Class="Bioingenieria.Views.CronogramaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Bioingenieria.Controls"
+        xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        Title="Cronogramas de mantenimiento y calibración"
+        Height="868" Width="1300"
+        MinHeight="698" MinWidth="1000"
+        Background="{StaticResource SurfaceBrush}"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Resources/app.ico">
+    <DockPanel>
+        <controls:FormHeaderControl DockPanel.Dock="Top" Title="Cronogramas de mantenimiento y calibración" />
+
+        <DockPanel DockPanel.Dock="Bottom" Background="White" LastChildFill="False">
+            <Button DockPanel.Dock="Right" Content="Cerrar" Style="{StaticResource SecondaryButtonStyle}" Width="120" IsCancel="True" Margin="12" />
+        </DockPanel>
+
+        <StackPanel DockPanel.Dock="Top" Background="White">
+            <StackPanel Orientation="Horizontal" Margin="12,12,12,4">
+                <ToggleButton x:Name="MaintenanceTypeButton" Content="Mantenimiento" Style="{StaticResource ToggleButtonStyle}" Width="140" Margin="0,0,8,0" Click="MaintenanceTypeButton_Click" />
+                <ToggleButton x:Name="CalibrationTypeButton" Content="Calibración" Style="{StaticResource ToggleButtonStyle}" Width="140" Margin="0,0,24,0" Click="CalibrationTypeButton_Click" />
+
+                <TextBlock Text="Año:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <Grid Width="70" Height="27" Margin="0,0,24,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="YearTextBox" Grid.Column="0" VerticalContentAlignment="Center" TextAlignment="Center" PreviewTextInput="YearTextBox_PreviewTextInput" />
+                    <StackPanel Grid.Column="1">
+                        <RepeatButton Content="▲" FontSize="8" Height="13" Padding="0" Click="YearUpButton_Click" />
+                        <RepeatButton Content="▼" FontSize="8" Height="13" Padding="0" Click="YearDownButton_Click" />
+                    </StackPanel>
+                </Grid>
+
+                <Button Content="Importar..." Style="{StaticResource SecondaryButtonStyle}" Width="140" Click="ImportButton_Click" />
+            </StackPanel>
+            <TextBlock x:Name="StatusTextBlock" Text="Sin importar todavía." Foreground="Gray" Margin="12,0,12,12" />
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Top" Background="White">
+            <Grid Margin="12,8,12,8">
+                <TextBlock x:Name="AlertSummaryTextBlock" Text="Sin alertas de vencimiento." VerticalAlignment="Center" />
+                <Button x:Name="AlertToggleButton"
+                        Content="Ver detalle ▾"
+                        HorizontalAlignment="Right"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        Cursor="Hand"
+                        Click="AlertToggleButton_Click"
+                        Visibility="Collapsed" />
+            </Grid>
+            <DataGrid x:Name="AlertDataGrid" Style="{StaticResource ThemedDataGridStyle}" Height="160" Visibility="Collapsed">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tipo" Binding="{Binding Type}" Width="0.8*" />
+                    <DataGridTextColumn Header="Área" Binding="{Binding Area}" Width="0.8*" />
+                    <DataGridTextColumn Header="Equipo" Binding="{Binding Equipment}" Width="1.4*" />
+                    <DataGridTemplateColumn Header="Estado" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding StatusBrush}" Padding="8,3" HorizontalAlignment="Left" CornerRadius="4">
+                                    <TextBlock Text="{Binding Status}" Foreground="{Binding StatusForeground}" />
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <TabControl x:Name="MainTabControl">
+            <TabItem Header="Cumplimiento por área">
+                <DockPanel>
+                    <TextBlock x:Name="SummaryTextBlock" DockPanel.Dock="Top" Text="Importa un cronograma para ver los indicadores." Margin="12,8" TextWrapping="Wrap" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="380" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Grid.Column="0">
+                            <Button x:Name="BreadcrumbButton"
+                                    DockPanel.Dock="Top"
+                                    Content="Todas las áreas"
+                                    HorizontalAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Foreground="{StaticResource PrimaryBrush}"
+                                    IsEnabled="False"
+                                    Cursor="Hand"
+                                    Click="BreadcrumbButton_Click"
+                                    Margin="12,8,12,4" />
+                            <DataGrid x:Name="AreaDataGrid" Style="{StaticResource ThemedDataGridStyle}" SelectionChanged="AreaDataGrid_SelectionChanged">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="AreaColumnHeader" Header="Área" Binding="{Binding Area}" Width="2.4*" />
+                                    <DataGridTextColumn Header="Prog." Binding="{Binding Scheduled}" Width="0.8*" />
+                                    <DataGridTextColumn Header="Ejec." Binding="{Binding Executed}" Width="0.8*" />
+                                    <DataGridTextColumn Header="% Cumpl." Binding="{Binding CompliancePercentDisplay}" Width="1.1*" />
+                                    <DataGridTextColumn Header="A tiempo" Binding="{Binding OnTime}" Width="1*" />
+                                    <DataGridTextColumn Header="Atrasados" Binding="{Binding Late}" Width="1*" />
+                                    <DataGridTextColumn Header="Vencidos" Binding="{Binding Overdue}" Width="1*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                        <wpf:WpfPlot x:Name="PlotView" Grid.Column="1" />
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Resumen semestral">
+                <DockPanel>
+                    <StackPanel x:Name="SemesterTogglePanel" DockPanel.Dock="Top" Orientation="Horizontal" Margin="12">
+                        <ToggleButton x:Name="FirstHalfButton" Content="Ene - Jun" Style="{StaticResource ToggleButtonStyle}" Width="140" Margin="0,0,8,0" Click="FirstHalfButton_Click" />
+                        <ToggleButton x:Name="SecondHalfButton" Content="Jul - Dic" Style="{StaticResource ToggleButtonStyle}" Width="140" Click="SecondHalfButton_Click" />
+                    </StackPanel>
+                    <TextBlock x:Name="SemesterSummaryTextBlock" DockPanel.Dock="Top" Text="Importa un cronograma para ver los indicadores." Margin="12,0,12,12" />
+                    <wpf:WpfPlot x:Name="SemesterPlotView" />
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Nivel de cumplimiento">
+                <DockPanel>
+                    <Button x:Name="ComplianceBreadcrumbButton"
+                            DockPanel.Dock="Top"
+                            Content="Todas las áreas"
+                            HorizontalAlignment="Left"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="{StaticResource PrimaryBrush}"
+                            IsEnabled="False"
+                            Cursor="Hand"
+                            Click="ComplianceBreadcrumbButton_Click"
+                            Margin="12,8,12,4" />
+                    <DataGrid x:Name="ComplianceLevelDataGrid" Style="{StaticResource ThemedDataGridStyle}" SelectionChanged="ComplianceLevelDataGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="ComplianceAreaColumnHeader" Header="Área" Binding="{Binding Area}" Width="1.8*" />
+                            <DataGridTextColumn Header="Prog." Binding="{Binding Scheduled}" Width="0.8*" />
+                            <DataGridTextColumn Header="Ejec." Binding="{Binding Executed}" Width="0.8*" />
+                            <DataGridTextColumn Header="% Cumpl." Binding="{Binding CompliancePercentDisplay}" Width="1*" />
+                            <DataGridTextColumn Header="Retraso máx. (sem.)" Binding="{Binding MaxDelayWeeks}" Width="1*" />
+                            <DataGridTemplateColumn Header="Semáforo" Width="1*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding SemaphoreBrush}" CornerRadius="10" Padding="8,3" HorizontalAlignment="Left">
+                                            <TextBlock Text="{Binding SemaphoreLabel}" Foreground="{Binding SemaphoreForeground}" FontWeight="SemiBold" />
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

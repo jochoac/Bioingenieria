@@ -79,7 +79,7 @@ public partial class AdminWindow : Window
 
     private void SchedulesButton_Click(object sender, RoutedEventArgs e)
     {
-        // CronogramaWindow lands in a later migration step.
-        MessageBox.Show(this, "Cronogramas aún no está migrado a WPF.", "Pendiente", MessageBoxButton.OK, MessageBoxImage.Information);
+        var window = new CronogramaWindow(_scheduleService) { Owner = this };
+        window.ShowDialog();
     }
 }
