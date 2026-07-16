@@ -2,6 +2,8 @@
 
 Aplicación de escritorio (WPF, .NET 9) para organizar y localizar la documentación técnica de equipos biomédicos, identificados por número de serie.
 
+> **¿Primera vez con el proyecto?** El proyecto todavía no tiene instalador — se ejecuta desde el código fuente con Visual Studio. Ver **[docs/MANUAL_USUARIO.md](docs/MANUAL_USUARIO.md)** para el paso a paso completo, con capturas de cada pantalla.
+
 ## Requisitos
 
 - Windows 10/11
@@ -9,7 +11,7 @@ Aplicación de escritorio (WPF, .NET 9) para organizar y localizar la documentac
 
 ## Primer uso
 
-1. Ejecutar `Bioingenia.exe`.
+1. Abrir `Bioingenia.sln` en Visual Studio y ejecutar con **F5** (ver el manual para más detalle).
 2. La app pide seleccionar la carpeta raíz de equipos (**EQUIPOS_ROOT**), donde se guarda toda la documentación. Puede ser una carpeta local o una ruta de red compartida entre varios equipos de cómputo.
 3. Iniciar sesión con el usuario semilla creado automáticamente:
    - **Usuario:** `admin`
